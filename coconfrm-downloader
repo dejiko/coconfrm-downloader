@@ -1,0 +1,121 @@
+#!/bin/sh
+
+
+FRMFOL="coconfrm"
+
+
+if [ ! `which wget` ];
+then
+  echo "Error: wget is not found."
+  exit 2
+fi
+
+if [ ! `which tar` ];
+then
+  echo "Error: tar is not found."
+  exit 2
+fi
+
+mkdir coconfrm
+
+
+echo "Welcome to opencocon firmware downloader (Linux 3.10 based)."
+
+# Broadcom
+echo -n "Download Broadcom bcm43xx firmware? (y/n) : "
+read b43_dl
+
+if [ "$b43_dl" = "y" ];
+then
+  wget -O $FRMFOL/broadcom-wl-5.100.138.tar.bz2 "http://www.lwfinger.com/b43-firmware/broadcom-wl-5.100.138.tar.bz2"
+  wget -O $FRMFOL/wl_apsta-3.130.20.0.o "http://downloads.openwrt.org/sources/wl_apsta-3.130.20.0.o"
+
+  if [ ! -r "$FRMFOL/broadcom-wl-5.100.138.tar.bz2" -o ! -r "$FRMFOL/wl_apsta-3.130.20.0.o" ];
+  then
+    echo "ERROR: Download failed."
+    exit 3
+  fi
+
+  tar -xjf $FRMFOL/broadcom-wl-5.100.138.tar.bz2 -C $FRMFOL
+  mv $FRMFOL/broadcom-wl-5.100.138/linux/wl_apsta.o $FRMFOL
+
+  if [ ! -r "$FRMFOL/wl_apsta.o" ];
+  then
+    echo "ERROR: Extract failed."
+    exit 3
+  fi
+
+  rm -r $FRMFOL/broadcom-wl-5.100.138
+  rm $FRMFOL/broadcom-wl-5.100.138.tar.bz2
+
+  echo "Okey. Broadcom bcm43xx firmware is ready on $FRMFOL."
+fi
+
+
+# Intel
+echo -n "Download Intel ipw2x00 firmware? (y/n) : "
+read ipw_dl
+
+if [ "$ipw_dl" = "y" ];
+then
+  wget -O $FRMFOL/firmware-ipw2x00.copyright "http://sources.debian.net/data/non-free/f/firmware-nonfree/0.40/debian/firmware-ipw2x00.copyright"
+
+  if [ ! -r "$FRMFOL/firmware-ipw2x00.copyright" ];
+  then
+    echo "ERROR: Download failed."
+    exit 3
+  fi
+
+  echo "So, For using ip2x00 firmware, you must read and agree license. Push [Enter] to read license."
+  read nul_in
+  more  $FRMFOL/firmware-ipw2x00.copyright
+  echo "Agree the License? (y/n)"
+  read ipw_ag
+
+  if [ "$ipw_ag" = "y" ];
+  then
+    # Download firmware
+    wget -O $FRMFOL/ipw2100-1.3-i.fw "http://sources.debian.net/src/firmware-nonfree/0.40/ipw2x00/ipw2100-1.3-i.fw"
+    wget -O $FRMFOL/ipw2100-1.3-p.fw "http://sources.debian.net/src/firmware-nonfree/0.40/ipw2x00/ipw2100-1.3-p.fw"
+    wget -O $FRMFOL/ipw2100-1.3.fw "http://sources.debian.net/src/firmware-nonfree/0.40/ipw2x00/ipw2100-1.3.fw"
+    wget -O $FRMFOL/ipw2200-bss.fw "http://sources.debian.net/src/firmware-nonfree/0.40/ipw2x00/ipw2200-bss.fw"
+    wget -O $FRMFOL/ipw2200-ibss.fw "http://sources.debian.net/src/firmware-nonfree/0.40/ipw2x00/ipw2200-ibss.fw"
+    wget -O $FRMFOL/ipw2200-sniffer.fw "http://sources.debian.net/src/firmware-nonfree/0.40/ipw2x00/ipw2200-sniffer.fw"
+
+    if [ ! -r "$FRMFOL/ipw2100-1.3-i.fw" -o ! -r "$FRMFOL/ipw2100-1.3-p.fw" -o ! -r "$FRMFOL/ipw2100-1.3.fw" -o ! -r "$FRMFOL/ipw2200-bss.fw" -o ! -r "$FRMFOL/ipw2200-ibss.fw" -o ! -r "$FRMFOL/ipw2200-sniffer.fw" ];
+    then
+      echo "ERROR: Download failed."
+      exit 3
+    fi
+
+    echo "Okey. Intel ipw2x00 firmware is ready on $FRMFOL."
+
+  else
+    echo "Okey, skip ipw2x00."
+  fi
+
+fi
+
+# Prism54
+echo -n "Download Prism54 firmware? (y/n) : "
+read p54_dl
+
+if [ "$p54_dl" = "y" ];
+then
+  wget --no-check-certificate -O $FRMFOL/isl3886pci "http://daemonizer.de/prism54/prism54-fw/fw-softmac/2.13.25.0.arm"
+  wget --no-check-certificate -O $FRMFOL/isl3886usb "http://daemonizer.de/prism54/prism54-fw/fw-usb/2.13.1.0.lm86.arm"
+   wget --no-check-certificate -O $FRMFOL/isl3887usb "http://daemonizer.de/prism54/prism54-fw/fw-usb/2.13.25.0.lm87.arm"
+
+  if [ ! -r "$FRMFOL/isl3886pci" -o ! -r "$FRMFOL/isl3886usb" -o ! -r "$FRMFOL/isl3887usb" ];
+  then
+    echo "ERROR: Download failed."
+    exit 3
+  fi
+
+   echo "Okey. Prism54 firmware is ready on $FRMFOL."
+fi
+
+echo "These firmware is stored in $FRMFOL. So copy this folder to ROOT DIRECTORY on opencocon-readable device (USB-memory, SD card, Harddisk etc)."
+echo "Caution, These firmware is not for Redistributable. "
+echo ""
+echo "Thank you, kon-kon!"
