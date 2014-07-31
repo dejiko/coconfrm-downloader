@@ -58,7 +58,7 @@ read ipw_dl
 
 if [ "$ipw_dl" = "y" ];
 then
-  wget -O $FRMFOL/firmware-ipw2x00.copyright "http://sources.debian.net/data/non-free/f/firmware-nonfree/0.40/debian/firmware-ipw2x00.copyright"
+  wget -O $FRMFOL/firmware-ipw2x00.copyright "http://sources.debian.net/data/non-free/f/firmware-nonfree/0.43/ipw2x00/LICENSE"
 
   if [ ! -r "$FRMFOL/firmware-ipw2x00.copyright" ];
   then
@@ -75,12 +75,12 @@ then
   if [ "$ipw_ag" = "y" ];
   then
     # Download firmware
-    wget -O $FRMFOL/ipw2100-1.3-i.fw "http://sources.debian.net/src/firmware-nonfree/0.40/ipw2x00/ipw2100-1.3-i.fw"
-    wget -O $FRMFOL/ipw2100-1.3-p.fw "http://sources.debian.net/src/firmware-nonfree/0.40/ipw2x00/ipw2100-1.3-p.fw"
-    wget -O $FRMFOL/ipw2100-1.3.fw "http://sources.debian.net/src/firmware-nonfree/0.40/ipw2x00/ipw2100-1.3.fw"
-    wget -O $FRMFOL/ipw2200-bss.fw "http://sources.debian.net/src/firmware-nonfree/0.40/ipw2x00/ipw2200-bss.fw"
-    wget -O $FRMFOL/ipw2200-ibss.fw "http://sources.debian.net/src/firmware-nonfree/0.40/ipw2x00/ipw2200-ibss.fw"
-    wget -O $FRMFOL/ipw2200-sniffer.fw "http://sources.debian.net/src/firmware-nonfree/0.40/ipw2x00/ipw2200-sniffer.fw"
+    wget -O $FRMFOL/ipw2100-1.3-i.fw "http://sources.debian.net/src/firmware-nonfree/0.43/ipw2x00/ipw2100-1.3-i.fw"
+    wget -O $FRMFOL/ipw2100-1.3-p.fw "http://sources.debian.net/src/firmware-nonfree/0.43/ipw2x00/ipw2100-1.3-p.fw"
+    wget -O $FRMFOL/ipw2100-1.3.fw "http://sources.debian.net/src/firmware-nonfree/0.43/ipw2x00/ipw2100-1.3.fw"
+    wget -O $FRMFOL/ipw2200-bss.fw "http://sources.debian.net/src/firmware-nonfree/0.43/ipw2x00/ipw2200-bss.fw"
+    wget -O $FRMFOL/ipw2200-ibss.fw "http://sources.debian.net/src/firmware-nonfree/0.43/ipw2x00/ipw2200-ibss.fw"
+    wget -O $FRMFOL/ipw2200-sniffer.fw "http://sources.debian.net/src/firmware-nonfree/0.43/ipw2x00/ipw2200-sniffer.fw"
 
     if [ ! -r "$FRMFOL/ipw2100-1.3-i.fw" -o ! -r "$FRMFOL/ipw2100-1.3-p.fw" -o ! -r "$FRMFOL/ipw2100-1.3.fw" -o ! -r "$FRMFOL/ipw2200-bss.fw" -o ! -r "$FRMFOL/ipw2200-ibss.fw" -o ! -r "$FRMFOL/ipw2200-sniffer.fw" ];
     then
